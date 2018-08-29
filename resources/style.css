@@ -14,7 +14,7 @@ header {
   left: 0;
   /* might want to change this if I continue with this format */
   z-index: 0;
-  background: #99efee;
+  background: #8ff7a5;
   box-shadow: 0px 2px 4px rgba(93,114,149,0.25);
   border-bottom-right-radius:10px;
   border-bottom-left-radius:10px;
@@ -25,6 +25,7 @@ header input {
   height: 50px;
   float:left;
   color: #fff;
+  font-size: 20px;
   text-indent: 18px;
   padding: 0 60px 0 0;
   background: rgba(206, 253, 255, .25);
@@ -43,9 +44,11 @@ header input {
 }
 
 header button {
-  width: 50px;
+  width: 100px;
   height: 50px;
   position: absolute;
+  font-size: 20px;
+  color:#8c8c8c;
   top: 15px;
   right: 15px;
   z-index: 2;
@@ -55,11 +58,53 @@ header button {
 
 }
 
+.startButton {
+  margin-top: 120px;
+  margin-right: 40%;
+  margin-left: 40%;
+  width: 20%;
+  border: none;
+  background-color: #8ff7a5;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
 #timer {
   width: 100%;
   height: 50px;
   position: fixed;
   top: 100px;
+  /* removed to toggle */
+  /* display: inline-block; */
+  display: none;
+  text-align: center;
+  font-size: 30px;
+}
+
+#timer > div{
+  padding: 5px;
+  border-radius: 3px;
+  background: #f2f2f2;
+  display: inline-block;
+}
+#timer div > span{
+  padding: 5px;
+
+  display: inline-block;
+}
+
+#timer button{
+  display: inline;
+}
+
+.smalltext{
+  font-size: 10px;
 }
 
 header input::-webkit-input-placeholder {

@@ -1,3 +1,12 @@
+
+var running = 0;
+var mins = 10;
+
+var remMins = 0;
+var remSecs = 0;
+var timer = document.getElementById('timer');
+var startButton = document.getElementById('startButton');
+
 document.getElementById('add').addEventListener('click', buttonClicked);
 
 // user clicked on add button
@@ -23,14 +32,16 @@ function getRemainingTime(endtime) {
   };
 }
 function initalize(endtime) {
-  var timer = document.getElementById('timer');
   var minutesSpan = timer.querySelector('.minutes');
-  var secondsSpan = timer.querySelector('.seconds');
-
+  var secondsSpan = timer.querySelector('.secs');
   function updateTimer() {
     var remTime = getRemainingTime(endtime);
-    minutesSpan.innerHTML = ('0' + remTime.minutes).slice(-2);
-    secondsSpan.innerHTML = ('0' + remTime.seconds).slice(-2);
+    // update global varibles
+    remMins = remTime.minutes;
+    remSecs = remTime.seconds;
+
+    minutesSpan.innerHTML = ('0' + remMins).slice(-2);
+    secondsSpan.innerHTML = ('0' + remSecs).slice(-2);
 
     if (remTime.total <= 0) {
       clearInterval(timeInterval);
@@ -38,11 +49,19 @@ function initalize(endtime) {
 
   }
   updateTimer();
-  var timeInterval = setInterval(updateTimer, 1000);
-
+  if (running){
+    var timeInterval = setInterval(updateTimer, 1000);
+  }
 }
-// placeholder
-var mins = 10
-var deadline = new Date(Date.parse(new Date()) + mins * 60 * 1000);
-console.log(deadline);
-initalize(deadline);
+
+function startTimer(){
+  timer.style.display = 'inline-block';
+  startButton.style.display = 'none';
+  running = 1;
+  var deadline = new Date(Date.parse(new Date()) + mins * 60 * 1000);
+  initalize(deadline);
+}
+// funciton pauseTimer(){
+//
+// }
+startButton.addEventListener('click', startTimer);
