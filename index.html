@@ -1,3 +1,7 @@
+<!-- A todo list/timer application. All code is my own,
+but some todo list code and UI inspiration is derived
+from max Sandelin's turorial (themaxsandelin on github) -->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -17,6 +21,7 @@
       <button id='add'>add</button>
 
     </header>
+
   <div id = 'timer'>
     <div>
       <span class="minutes"></span>
@@ -26,9 +31,35 @@
       <span class="secs"></span>
       <div class="smalltext">Seconds</div>
     </div>
-    <!-- <button><span class = "button"></span></button> -->
   </div>
+
   <button class='startButton' id='startButton'>Start Timer</button>
+
+
+<div class = 'container'>
+  <!-- uncompleted tasks -->
+<ul class= 'todo'>
+
+  <li>
+    this is a list item
+    <div class = 'buttons'>
+      <button class = 'remove'>
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="44.238px" height="44.238px" viewBox="0 0 44.238 44.238" style="enable-background:new 0 0 44.238 44.238;" xml:space="preserve"><g><g><g><path d="M15.533,29.455c-0.192,0-0.384-0.073-0.53-0.22c-0.293-0.293-0.293-0.769,0-1.062l13.171-13.171c0.293-0.293,0.768-0.293,1.061,0s0.293,0.768,0,1.061L16.063,29.235C15.917,29.382,15.725,29.455,15.533,29.455z"/></g><g><path d="M28.704,29.455c-0.192,0-0.384-0.073-0.53-0.22L15.002,16.064c-0.293-0.293-0.293-0.768,0-1.061s0.768-0.293,1.061,0l13.171,13.171c0.293,0.293,0.293,0.769,0,1.062C29.088,29.382,28.896,29.455,28.704,29.455z"/></g><path d="M22.119,44.237C9.922,44.237,0,34.315,0,22.12C0,9.924,9.922,0.001,22.119,0.001S44.238,9.923,44.238,22.12S34.314,44.237,22.119,44.237z M22.119,1.501C10.75,1.501,1.5,10.751,1.5,22.12s9.25,20.619,20.619,20.619s20.619-9.25,20.619-20.619S33.488,1.501,22.119,1.501z"/></g></g></svg>
+      </button>
+      <button class = 'complete'>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve"><g><path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"/><path d="M38.252,15.336l-15.369,17.29l-9.259-7.407c-0.43-0.345-1.061-0.274-1.405,0.156c-0.345,0.432-0.275,1.061,0.156,1.406l10,8C22.559,34.928,22.78,35,23,35c0.276,0,0.551-0.114,0.748-0.336l16-18c0.367-0.412,0.33-1.045-0.083-1.411C39.251,14.885,38.62,14.922,38.252,15.336z"/></g></svg>
+      </button>
+    </div>
+  </li>
+
+</ul>
+
+<!-- completed tasks -->
+<ul class = 'todo' id = 'completed'>
+</ul>
+
+</div>
+
 
   <script src = "resources/script.js"></script>
 </body>
