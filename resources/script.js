@@ -50,6 +50,7 @@ function addItem(text){
   var complete = document.createElement('button')
   complete.classList.add('complete');
   complete.innerHTML = completeSVG;
+  complete.addEventListener('click', completeItem);
 
   buttons.appendChild(remove);
   buttons.appendChild(complete);
@@ -63,8 +64,19 @@ function addItem(text){
 function removeItem(eventObject){
   var item = this.parentNode.parentNode;
   var parent = item.parentNode;
-  console.log(item.textContent)
+  // console.log(item.textContent)
   parent.removeChild(item);
+}
+
+function completeItem(){
+  console.log('completing item')
+  var item = this.parentNode.parentNode;
+  var parent = item.parentNode;
+  var id = parent.id;
+// check if item added to complted list or re-added to todo.
+  var target = (id === 'todo') ? document.getElementById('completed'):document.getElementById('todo');
+  parent.removeChild(item);
+  target.insertBefore(item, target.childNodes[0]);
 }
 
 function selectItem(eventObject){
