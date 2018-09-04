@@ -6,6 +6,15 @@ var completeSVG = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:x
 var running = 0;
 var timeInterval;
 
+var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')) : {
+  todo: [],
+  completed: []
+};
+
+renderTodolist();
+
+console.log(JSON.parse(localStorage.getItem('todoList')));
+
 // default starting time
 var mins = 10;
 
@@ -61,10 +70,18 @@ function addItem(text){
   list.insertBefore(item, list.childNodes[0]);
 }
 
-function removeItem(eventObject){
+function removeItem(eventObject) {
   var item = this.parentNode.parentNode;
   var parent = item.parentNode;
-  // console.log(item.textContent)
+  var id = parent.id;
+  var value = item.innerText;
+
+  if (id === 'todo') {
+    data.todo.splice(data.todo.indexOf(value), 1);
+  } else {
+    data.completed.splice(data.completed.indexOf(value), 1);
+  }
+  dataObjectUpdate();
   parent.removeChild(item);
 }
 
@@ -73,6 +90,19 @@ function completeItem(){
   var item = this.parentNode.parentNode;
   var parent = item.parentNode;
   var id = parent.id;
+  var value = item.innerText;
+
+  // removes value from todo array, adds to completed.
+  if (id === 'todo') {
+    data.todo.splice(data.todo.indexOf(value),1);
+    data.completed.push(value);
+  }
+    else{
+      data.completed.splice(data.completed.indexOf(value),1);
+      data.todo.push(value);
+    }
+  dataObjectUpdate();
+
 // check if item added to complted list or re-added to todo.
   var target = (id === 'todo') ? document.getElementById('completed'):document.getElementById('todo');
   parent.removeChild(item);

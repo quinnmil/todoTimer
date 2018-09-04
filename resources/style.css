@@ -245,7 +245,7 @@ ul.todo#todo:empty:after {
 }
 
 ul.todo#completed:empty:after {
-  content: 'You have yet to complete any tasks.';
+  content: 'completed tasks will appear here.';
 }
 
 ul.todo#todo:after, ul.todo#completed:after {
