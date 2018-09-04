@@ -24,25 +24,60 @@ var timer = document.getElementById('timer');
 var startButton = document.getElementById('startButton');
 var toggleButton = document.getElementById('toggleButton');
 
-document.getElementById('add').addEventListener('click', newTodo);
+document.getElementById('add').addEventListener('click', function(){
+  value = document.getElementById('item').value;
+  if (value) {
+    newTodoItem(value);
+  }
+});
+
+document.getElementById('item').addEventListener('keydown', function(e) {
+  var value = this.value;
+  if (e.code === 'Enter' && value){
+    newTodoItem(value);
+  }
+});
+
 
 startButton.addEventListener('click', startTimer);
 toggleButton.addEventListener('click', toggleTimer);
-// user clicked on add button
-// if there's any text, send.
 
-function newTodo(){
-  var value = document.getElementById('item').value;
-  if (value) {
+
+function renderTodolist(){
+  if (!data.todo.length && !data.completed.length) return;
+
+  for (var i = 0; i < data.todo.length; i++) {
+    var value = data.completed[i];
     addItem(value);
-    document.getElementById('item').value = '';
+
+
+  }
+  for (var j = 0; j < data.completed.length; j++); {
+    var value = data.completed[i];
+    addItem(value, true);
   }
 }
 
+function dataObjectUpdate() {
+  jsonData = JSON.stringify(data);
+  // console.log(jsonData);
+  localStorage.setItem('todoList', jsonData);
+}
 
-function addItem(text){
+function newTodoItem(value){
 
-  var list = document.getElementById('todo');
+    addItem(value);
+    document.getElementById('item').value = '';
+
+    // add to data object
+    data.todo.push(value);
+    dataObjectUpdate();
+  }
+
+
+function addItem(text, completed){
+
+  var list = (completed) ? document.getElementById('completed') : document.getElementById('todo');
   var item = document.createElement('li');
   item.innerText = text;
 
