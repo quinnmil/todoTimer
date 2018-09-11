@@ -11,7 +11,6 @@ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem(
   completed: []
 };
 
-renderTodolist();
 
 console.log(JSON.parse(localStorage.getItem('todoList')));
 
@@ -23,6 +22,8 @@ var remSecs = 0;
 var timer = document.getElementById('timer');
 var startButton = document.getElementById('startButton');
 var toggleButton = document.getElementById('toggleButton');
+
+renderTodolist();
 
 document.getElementById('add').addEventListener('click', function(){
   value = document.getElementById('item').value;
