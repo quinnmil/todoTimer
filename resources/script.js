@@ -1,4 +1,13 @@
+/*
+TodoTimer Application
+A productivity tool devloped for practice with Javascript.
+Followed various tutorial and example code.
+Full citation will be avaible before deployment.
 
+Author: Quinn Milionis
+*/
+
+// SVG code for complete and delete icons.
 var removeSVG = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="44.238px" height="44.238px" viewBox="0 0 44.238 44.238" style="enable-background:new 0 0 44.238 44.238;" xml:space="preserve"><g><g><g><path d="M15.533,29.455c-0.192,0-0.384-0.073-0.53-0.22c-0.293-0.293-0.293-0.769,0-1.062l13.171-13.171c0.293-0.293,0.768-0.293,1.061,0s0.293,0.768,0,1.061L16.063,29.235C15.917,29.382,15.725,29.455,15.533,29.455z"/></g><g><path d="M28.704,29.455c-0.192,0-0.384-0.073-0.53-0.22L15.002,16.064c-0.293-0.293-0.293-0.768,0-1.061s0.768-0.293,1.061,0l13.171,13.171c0.293,0.293,0.293,0.769,0,1.062C29.088,29.382,28.896,29.455,28.704,29.455z"/></g><path d="M22.119,44.237C9.922,44.237,0,34.315,0,22.12C0,9.924,9.922,0.001,22.119,0.001S44.238,9.923,44.238,22.12S34.314,44.237,22.119,44.237z M22.119,1.501C10.75,1.501,1.5,10.751,1.5,22.12s9.25,20.619,20.619,20.619s20.619-9.25,20.619-20.619S33.488,1.501,22.119,1.501z"/></g></g></svg>`
 var completeSVG = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52 52" style="enable-background:new 0 0 52 52;" xml:space="preserve"><g><path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"/><path d="M38.252,15.336l-15.369,17.29l-9.259-7.407c-0.43-0.345-1.061-0.274-1.405,0.156c-0.345,0.432-0.275,1.061,0.156,1.406l10,8C22.559,34.928,22.78,35,23,35c0.276,0,0.551-0.114,0.748-0.336l16-18c0.367-0.412,0.33-1.045-0.083-1.411C39.251,14.885,38.62,14.922,38.252,15.336z"/></g></svg>`
 
@@ -14,42 +23,46 @@ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem(
 
 console.log(JSON.parse(localStorage.getItem('todoList')));
 
-// pomodoro sequence
-const POMODORO = [25, 5, 25, 5, 25, 5, 15];
+// pomodoro sequence. Stage index's into this.
+const POMODORO = [.025, 0.025, 25, 5, 25, 5, 15];
 var stage = 0;
+// time vars used for pausing/stopping.
 var remMins = 0;
 var remSecs = 0;
-var timer = document.getElementById('timer');
+
+var selected = ''
+// DOM selectors
+var timer = document.getElementById('timer'); // timer object
 var startButton = document.getElementById('startButton');
 var toggleButton = document.getElementById('toggleButton');
 var addTaskButton = document.getElementById('addTask');
-var entry = document.getElementsByClassName('entry')[0];
+var entry = document.getElementsByClassName('entry')[0]; // task entry object
 
 startButton.addEventListener('click', startTimer);
 toggleButton.addEventListener('click', toggleTimer);
 
 // renderTodolist();
 
-addTaskButton.addEventListener('click', function(){
-  var entry = document.getElementsByClassName('entry')[0];
+// Event listners/helpers. These could be better implemented.
+
+// opens entry panel. in current implemntation, this coudl just remain open.
+addTaskButton.addEventListener('click', function() {
   entry.style.display = 'inline-block';
   this.style.display = 'none';
 });
 
-document.getElementById('add').addEventListener('click', function(){
+document.getElementById('add').addEventListener('click', function() {
   value = document.getElementById('item').value;
   if (value) {
     newTodoItem(value);
     entry.style.display = 'none';
     addTaskButton.style.display = 'inline-block'
-
   }
 });
 
-// allows user to press enter to add task
 document.getElementById('item').addEventListener('keydown', function(e) {
   var value = this.value;
-  if (e.code === 'Enter' && value){
+  if (e.code === 'Enter' && value) {
     newTodoItem(value);
     entry.style.display = 'none';
     addTaskButton.style.display = 'inline-block'
@@ -57,15 +70,13 @@ document.getElementById('item').addEventListener('keydown', function(e) {
 });
 
 
-
-
-function renderTodolist(){
+function renderTodolist() {
+  // if there is nothing in the local storage, return.
   if (!data.todo.length && !data.completed.length) return;
 
   for (var i = 0; i < data.todo.length; i++) {
     var value = data.completed[i];
     addItem(value);
-
 
   }
   for (var j = 0; j < data.completed.length; j++); {
@@ -76,22 +87,22 @@ function renderTodolist(){
 
 function dataObjectUpdate() {
   jsonData = JSON.stringify(data);
-  // console.log(jsonData);
+  // IDEA: use mongodb instead.
   localStorage.setItem('todoList', jsonData);
 }
 
-function newTodoItem(value){
+function newTodoItem(value) {
 
-    addItem(value);
-    document.getElementById('item').value = '';
+  addItem(value);
+  document.getElementById('item').value = '';
 
-    // add to data object
-    data.todo.push(value);
-    dataObjectUpdate();
-  }
+  // add to data object
+  data.todo.push(value);
+  dataObjectUpdate();
+}
 
 
-function addItem(text, completed){
+function addItem(text, completed) {
   // updateSelected()
 
   var list = (completed) ? document.getElementById('completed') : document.getElementById('todo');
@@ -140,7 +151,7 @@ function removeItem(eventObject) {
   parent.removeChild(item);
 }
 
-function completeItem(){
+function completeItem() {
   console.log('completing item');
   var item = this.parentNode.parentNode;
   var parent = item.parentNode;
@@ -149,35 +160,42 @@ function completeItem(){
 
   // removes value from todo array, adds to completed.
   if (id === 'todo') {
-    data.todo.splice(data.todo.indexOf(value),1);
+    data.todo.splice(data.todo.indexOf(value), 1);
     data.completed.push(value);
+  } else {
+    data.completed.splice(data.completed.indexOf(value), 1);
+    data.todo.push(value);
   }
-    else{
-      data.completed.splice(data.completed.indexOf(value),1);
-      data.todo.push(value);
-    }
   dataObjectUpdate();
 
- // check if item added to complted list or re-added to todo.
- // if id is todo, target is 'completed', if not, target is 'todo'
-  var target = (id === 'todo') ? document.getElementById('completed'):document.getElementById('todo');
+  // check if item added to complted list or re-added to todo.
+  // if id is todo, target is 'completed', if not, target is 'todo'
+  var target = (id === 'todo') ? document.getElementById('completed') : document.getElementById('todo');
   parent.removeChild(item);
   target.insertBefore(item, target.childNodes[0]);
 }
 
 
 // Net yet implemented
-function selectObject(){
-  var header = document.getElementById("todoList");
-  var btns = header.getElementsByClassName("todo");
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
-    });
+function selectObject(eventObject) {
+  console.log('completing item');
+  var item = this.parentNode.parentNode;
+  var parent = item.parentNode;
+  var id = parent.id;
+  var value = item.innerText;
+
+  // if any other items have been selected, remove this class.
+  if (selected != ''){
+    var previous = document.getElementsByClassName('selected')[0];
+    previous.classList.remove('selected');
   }
+  item.classList.add('selected');
+
+  }
+
+
 }
+
 // var header = document.getElementById("todoLlist");
 // var btns = document.getElementsByClassName("todo");
 // for (var i = 0; i < btns.length; i++) {
@@ -189,9 +207,24 @@ function selectObject(){
 //   })
 
 
+
 // Timer Functions
 
-function startTimer(){
+function incrementStage() {
+  var sequenceStatus = document.querySelector('.stage');
+
+  if (stage <= 5) {
+    if ((stage%2) != 1){
+      sequenceStatus.innerHTML = ("Break")
+    } else {
+      sequenceStatus.innerHTML = ("Focus")
+    }
+    stage += 1;
+  } else stage = 0;
+  startTimer();
+}
+
+function startTimer() {
   timer.style.display = 'inline-block';
   startButton.style.display = 'none';
   toggleButton.style.display = 'inline-block';
@@ -208,16 +241,18 @@ function getRemainingTime(endtime) {
   var seconds = Math.floor((time / 1000) % 60);
   var minutes = Math.floor((time / 1000 / 60) % 60);
 
-  return{
-    'total' : time,
-    'minutes' : minutes,
-    'seconds' : seconds
+  return {
+    'total': time,
+    'minutes': minutes,
+    'seconds': seconds
   };
 }
+
 function initalize(endtime) {
   // starts timer with specificed time.
   var minutesSpan = timer.querySelector('.minutes');
   var secondsSpan = timer.querySelector('.secs');
+
   function updateTimer() {
     var remTime = getRemainingTime(endtime);
     // update global varibles
@@ -234,24 +269,19 @@ function initalize(endtime) {
 
   }
   updateTimer();
-  if (running){
+  if (running) {
     timeInterval = setInterval(updateTimer, 1000);
   }
 }
 
-function incrementState(){
-  if (stage <= 5){
-    stage += 1;
-  }
-  else stage = 0;
-}
 
-function toggleTimer(){
-  if (running === 1){
+
+function toggleTimer() {
+  if (running === 1) {
     this.innerHTML = 'continue';
     clearInterval(timeInterval);
     running = 0;
-  }else {
+  } else {
     this.innerHTML = 'pause';
     // creates new deadline from remainging time on clock.
     running = 1;
