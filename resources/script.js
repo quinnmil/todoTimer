@@ -6,42 +6,55 @@ var completeSVG = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:x
 var running = 0;
 var timeInterval;
 
+// stores local data.
 var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem('todoList')) : {
   todo: [],
   completed: []
 };
 
-
 console.log(JSON.parse(localStorage.getItem('todoList')));
 
 // default starting time
-var mins = 10;
-
+const POMODORO = {25, 5, 25, 5, 25, 5, 15};
+var stage = 0;
 var remMins = 0;
 var remSecs = 0;
 var timer = document.getElementById('timer');
 var startButton = document.getElementById('startButton');
 var toggleButton = document.getElementById('toggleButton');
 
-renderTodolist();
+startButton.addEventListener('click', startTimer);
+toggleButton.addEventListener('click', toggleTimer);
+
+// renderTodolist();
+
+document.getElementById('addTask').addEventListener('click', function(){
+  var entry = document.getElementsByClassName('entry')[0];
+  entry.style.display = 'inline-block';
+  this.style.display = 'none';
+});
 
 document.getElementById('add').addEventListener('click', function(){
   value = document.getElementById('item').value;
   if (value) {
     newTodoItem(value);
+    var entry = document.getElementsByClassName('entry')[0];
+    entry.style.display = 'none';
+
   }
 });
 
+// allows user to press enter to add task
 document.getElementById('item').addEventListener('keydown', function(e) {
   var value = this.value;
   if (e.code === 'Enter' && value){
     newTodoItem(value);
+    var entry = document.getElementsByClassName('entry')[0];
+    entry.style.display = 'none';
   }
 });
 
 
-startButton.addEventListener('click', startTimer);
-toggleButton.addEventListener('click', toggleTimer);
 
 
 function renderTodolist(){
@@ -77,9 +90,12 @@ function newTodoItem(value){
 
 
 function addItem(text, completed){
+  // updateSelected()
 
   var list = (completed) ? document.getElementById('completed') : document.getElementById('todo');
   var item = document.createElement('li');
+
+  // item.classList.add("active")
   item.innerText = text;
 
   var buttons = document.createElement('div');
@@ -92,6 +108,7 @@ function addItem(text, completed){
   // add click event for removing item.
   remove.addEventListener('click', removeItem);
 
+  // click event for 'completing item'
   var complete = document.createElement('button')
   complete.classList.add('complete');
   complete.innerHTML = completeSVG;
@@ -101,7 +118,7 @@ function addItem(text, completed){
   buttons.appendChild(complete);
   item.appendChild(buttons)
 
-  item.addEventListener('click', selectItem);
+  // item.addEventListener('click', selectItem);
 
   list.insertBefore(item, list.childNodes[0]);
 }
@@ -122,7 +139,7 @@ function removeItem(eventObject) {
 }
 
 function completeItem(){
-  console.log('completing item')
+  console.log('completing item');
   var item = this.parentNode.parentNode;
   var parent = item.parentNode;
   var id = parent.id;
@@ -139,15 +156,36 @@ function completeItem(){
     }
   dataObjectUpdate();
 
-// check if item added to complted list or re-added to todo.
+ // check if item added to complted list or re-added to todo.
+ // if id is todo, target is 'completed', if not, target is 'todo'
   var target = (id === 'todo') ? document.getElementById('completed'):document.getElementById('todo');
   parent.removeChild(item);
   target.insertBefore(item, target.childNodes[0]);
 }
 
-function selectItem(eventObject){
-  console.log('selected:' + this);
+
+// Net yet implemented
+function selectObject(){
+  var header = document.getElementById("todoList");
+  var btns = header.getElementsByClassName("todo");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+    });
+  }
 }
+// var header = document.getElementById("todoLlist");
+// var btns = document.getElementsByClassName("todo");
+// for (var i = 0; i < btns.length; i++) {
+//   btns[i].addEventListener("click", function() {
+//     console.log(this);
+//     var current = document.getElementsByClassName("active");
+//     current[0].className = current[0].className.replace(" active", "");
+//     this.className += " active";
+//   })
+
 
 // Timer Functions
 
@@ -155,6 +193,7 @@ function startTimer(){
   timer.style.display = 'inline-block';
   startButton.style.display = 'none';
   toggleButton.style.display = 'inline-block';
+  var mins = POMODORO[stage];
 
   running = 1;
   var deadline = new Date(Date.parse(new Date()) + mins * 60 * 1000);

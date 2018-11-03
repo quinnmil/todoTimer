@@ -2,15 +2,27 @@
 
 body {
   /* account for header */
-  padding: 80px;
-  background: #e8ebf6
+  background: #fffcf7;
 }
-body, input, button, #timer{
-  font-family: 'Arimo', sans-serif;
 
+
+body, input, button{
+  font-family: 'Raleway', sans-serif;
+
+}
+
+.app {
+  padding-top: 15px;
+  padding-left: 50px;
+  padding-right: 50px
+}
+
+.title {
+  text-align: center;
 }
 
 .entry {
+  display: none;
   width: 100%;
   height: 80px;
   position: relative;
@@ -19,28 +31,25 @@ body, input, button, #timer{
   left: 0;
   /* might want to change this if I continue with this format */
   z-index: 0;
-  background: #9ea3b7;
+  background: #a1b5d8;
   box-shadow: 0px 2px 4px rgba(93,114,149,0.25);
-  border-bottom-right-radius:10px;
-  border-bottom-left-radius:10px;
+  border-radius: 10px
 }
 
 .entry input {
   width: 100%;
   height: 50px;
   float:left;
-  color: #fff;
+  color:#fffcf7;
   font-size: 20px;
+  font-weight: bold;
   text-indent: 18px;
   padding: 0 60px 0 0;
-  background: #7192a0;
+  background: #d5e4f3;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
-  border: 0px;
-  box-shadow: none;
-  outline: none;
 
   -webkit-appearance:none;
   -moz-appearance:none;
@@ -48,28 +57,33 @@ body, input, button, #timer{
   appearance:none;
 }
 
+.entry input:focus {
+  background-color: #d5e4f3
+}
+
 .entry button {
   width: 100px;
   height: 50px;
   position: absolute;
   font-size: 20px;
-  color:#8c8c8c;
+  color:#fff;
   top: 15px;
   right: 15px;
   z-index: 2;
   border-radius: 25px;
-  background: #fff;
+  background: #d9f2b4;
   box-shadow: 0px 2px 4px rgba(93,114,149,0.25);
   cursor: pointer;
   border: 0px;
 }
 
-.startButton, .toggleButton {
-  margin-top: 10px;
-  margin-right: 30%;
-  margin-left: 30%;
-  width: 40%;
-  border: none;
+.startButton, .toggleButton, .addTaskButton{
+  margin-top: 30px;
+  margin-right: 35%;
+  margin-left: 35%;
+  width: 30%;
+  border: 100px;
+  opacity: .5;
   background-color: #7192a0;
   color: white;
   padding: 10px 10px;
@@ -84,7 +98,7 @@ body, input, button, #timer{
 
 .toggleButton{
   display: none;
-  opacity: .5;
+
 }
 
 toggleButton:hover{
@@ -103,7 +117,7 @@ toggleButton:hover{
 
 }
 #timer span {
-  color: white;
+  color: black;
 }
 
 #timer > div{
@@ -120,6 +134,7 @@ toggleButton:hover{
 
 #timer button{
   display: inline;
+
 }
 /* might not want this at all */
 .smalltext{
@@ -149,9 +164,18 @@ ul.todo li {
   margin-bottom: 10px;
   /* so text breaks when hits button */
   padding: 14px 100px 14px 14px ;
+  /*  TODO */
   background: #fff;
 
   }
+  ul.todo li.active{
+    background: #d9f2b4;
+  }
+
+  ul.todo li.active:hover{
+    background: #3b5e28;
+  }
+
   ul.todo li:hover {
     background: #fdf5bf;
     transition:background 0.2s ease;
@@ -165,7 +189,7 @@ ul.todo li:last-of-type {
 .container {
   width: 100%;
   float: left;
-  padding: 15px;
+  padding: 30px;
 
 }
 ul.todo li .buttons {
@@ -214,7 +238,10 @@ ul.todo li .buttons button svg{
   margin: -11px 0 0 -11px;
 }
 
-/* todo: when item has completed tag, change */
+li.todo .selected{
+  background: #d9f2b4;
+}
+
 ul.todo#completed li {
   opacity: .5;
 }

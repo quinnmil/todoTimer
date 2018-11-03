@@ -10,57 +10,53 @@ from max Sandelin's turorial (themaxsandelin on github) -->
   <title>TodoTimer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- <link rel="stylesheet" type="text/css" href="resources/foundation/foundation.css"> -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0-rc.2/dist/css/foundation.min.css" integrity="sha256-iJQ8dZac/jUYHxiEnZJsyVpKcdq2sQvdA7t02QFmp30= sha384-SplqNBo/0ZlvSdwrP/riIPDozO5ck8+yIm++KVqyMAC53S6m3BaV+2OLpi7ULOOh sha512-ho6hK4sAWdCeqopNZWNy1d9Ok2hzfTLQLcGSr8ZlRzDzh6tNHkVoqSl6wgLsqls3yazwiG9H9dBCtSfPuiLRCQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0-rc.2/dist/css/foundation.min.css" integrity="sha256-iJQ8dZac/jUYHxiEnZJsyVpKcdq2sQvdA7t02QFmp30= sha384-SplqNBo/0ZlvSdwrP/riIPDozO5ck8+yIm++KVqyMAC53S6m3BaV+2OLpi7ULOOh sha512-ho6hK4sAWdCeqopNZWNy1d9Ok2hzfTLQLcGSr8ZlRzDzh6tNHkVoqSl6wgLsqls3yazwiG9H9dBCtSfPuiLRCQ=="
+    crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="resources/reset.min.css">
   <link rel="stylesheet" type="text/css" href="resources/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <!-- <script src ="resources/foundation/foundation.min.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0-rc.2/dist/js/foundation.min.js" integrity="sha256-G6jsRyH1fxbsvFIXSCuwYmI1aIDYBa28xscrvmYjJy0= sha384-vtoG68NvPc9azmFJr447vvY8qgdyA4FdaJ5/bqvzIM4eAdZfO0iyRRF8l2AAscYI sha512-43seCcNrHA0BQgrtyajB9sp8yOdv5c8QdYvgjP7zJ7v+dmzAcxYDQ2gupb9aztsNWBq1COIp/3NHYkQs4l/dkg==" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.0-rc.2/dist/js/foundation.min.js" integrity="sha256-G6jsRyH1fxbsvFIXSCuwYmI1aIDYBa28xscrvmYjJy0= sha384-vtoG68NvPc9azmFJr447vvY8qgdyA4FdaJ5/bqvzIM4eAdZfO0iyRRF8l2AAscYI sha512-43seCcNrHA0BQgrtyajB9sp8yOdv5c8QdYvgjP7zJ7v+dmzAcxYDQ2gupb9aztsNWBq1COIp/3NHYkQs4l/dkg=="
+    crossorigin="anonymous"></script>
 </head>
 
-
-<div class="top-bar">
-  <div class="top-bar-left">
-    <ul class="dropdown menu" data-dropdown-menu>
-      <li class="menu-text">TodoTimer</li>
-      <li class="has-submenu">
-    </ul>
-  </div>
-  <div class="top-bar-right">
-    <ul class="menu">
-      <li><button type="button" class="button">settings</button></li>
-    </ul>
-  </div>
-</div>
-
 <body>
-
-  <div class ='entry'>
-    <input type="text" placeholder ="enter a task.." id='item'>
-    <button id='add'>add</button>
+  <div class='title'>
+    <h1> Todo Timer </h1>
+    <p> a productivity app </p>
   </div>
 
-  <div id='timer'>
-    <div>
-      <span class="minutes"></span>
-      <div class="smalltext">Minutes</div>
+  <div class='app'>
+
+    <div class='entry'>
+      <input type="text" placeholder="enter a task.." id='item'>
+      <button id='add'>add</button>
     </div>
-    <div>
-      <span class="secs"></span>
-      <div class="smalltext">Seconds</div>
+
+    <div id='timer'>
+      <div>
+        <span class="minutes"></span>
+      </div>
+      <div>
+        <span class="secs"></span>
+      </div>
     </div>
+
+    <button class='startButton' id='startButton'>Start Timer</button>
+    <button class='addTaskButton' id='addTask'>Add Task</button>
+
+    <button class='toggleButton' id='toggleButton'>Pause</button>
+
+    <div id = todoList>
+      <div class='container'>
+        <!-- uncompleted tasks -->
+        <ul class='todo' id='todo'></ul>
+        <ul class='todo' id='completed'></ul>
+
+      </div>
+    </div>
+    <script src="resources/script.js"></script>
   </div>
-
-  <button class='startButton' id='startButton'>Start Timer</button>
-  <button class='toggleButton' id = 'toggleButton'>Pause</button>
-
-  <div class='container'>
-    <!-- uncompleted tasks -->
-    <ul class='todo' id='todo'></ul>
-    <ul class='todo' id='completed'></ul>
-
-  </div>
-  <script src="resources/script.js"></script>
 </body>
 
 </html>
