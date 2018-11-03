@@ -194,8 +194,6 @@ function selectObject(eventObject) {
   }
 
 
-}
-
 // var header = document.getElementById("todoLlist");
 // var btns = document.getElementsByClassName("todo");
 // for (var i = 0; i < btns.length; i++) {
