@@ -14,21 +14,23 @@ var data = (localStorage.getItem('todoList')) ? JSON.parse(localStorage.getItem(
 
 console.log(JSON.parse(localStorage.getItem('todoList')));
 
-// default starting time
-const POMODORO = {25, 5, 25, 5, 25, 5, 15};
+// pomodoro sequence
+const POMODORO = [25, 5, 25, 5, 25, 5, 15];
 var stage = 0;
 var remMins = 0;
 var remSecs = 0;
 var timer = document.getElementById('timer');
 var startButton = document.getElementById('startButton');
 var toggleButton = document.getElementById('toggleButton');
+var addTaskButton = document.getElementById('addTask');
+var entry = document.getElementsByClassName('entry')[0];
 
 startButton.addEventListener('click', startTimer);
 toggleButton.addEventListener('click', toggleTimer);
 
 // renderTodolist();
 
-document.getElementById('addTask').addEventListener('click', function(){
+addTaskButton.addEventListener('click', function(){
   var entry = document.getElementsByClassName('entry')[0];
   entry.style.display = 'inline-block';
   this.style.display = 'none';
@@ -38,8 +40,8 @@ document.getElementById('add').addEventListener('click', function(){
   value = document.getElementById('item').value;
   if (value) {
     newTodoItem(value);
-    var entry = document.getElementsByClassName('entry')[0];
     entry.style.display = 'none';
+    addTaskButton.style.display = 'inline-block'
 
   }
 });
@@ -49,8 +51,8 @@ document.getElementById('item').addEventListener('keydown', function(e) {
   var value = this.value;
   if (e.code === 'Enter' && value){
     newTodoItem(value);
-    var entry = document.getElementsByClassName('entry')[0];
     entry.style.display = 'none';
+    addTaskButton.style.display = 'inline-block'
   }
 });
 
@@ -227,6 +229,7 @@ function initalize(endtime) {
 
     if (remTime.total <= 0) {
       clearInterval(timeInterval);
+      incrementStage()
     }
 
   }
@@ -236,6 +239,12 @@ function initalize(endtime) {
   }
 }
 
+function incrementState(){
+  if (stage <= 5){
+    stage += 1;
+  }
+  else stage = 0;
+}
 
 function toggleTimer(){
   if (running === 1){
